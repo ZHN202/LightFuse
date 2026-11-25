@@ -1,418 +1,409 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <meta name="description" content="LightFuse: Relightable Interactive Gaussian Scene Reconstruction via Multi-Scan Fusion and 2D Gaussian Ray Tracing">
-  <meta name="keywords" content="LightFuse, 2D Gaussian Splatting, inverse rendering, relighting, ray tracing">
-  <meta name="author" content="Haonan Zhou, Gaoxiang Linghu, Youlin Jia, Hongyu Cui, Kewei Wei, Kaiyue Zhou, Bruce X.B. Yu, Gaoang Wang">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LightFuse</title>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/logo.png?v=3">
-
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script defer src="./static/js/index.js"></script>
+  <meta name="description" content="LightFuse reconstructs shared geometry and materials from scans of different layouts and lighting for object rearrangement, material editing and physically based relighting.">
+  <meta name="author" content="Haonan Zhou, Gaoxiang Linghu, Youlin Jia, Chuanyu Cheng, Hongyu Cui, Kewei Wei, Bruce X.B. Yu, Gaoang Wang">
+  <title>LightFuse: Relightable Interactive Gaussian Scene Reconstruction via Multi-Scan Fusion and 2D Gaussian Ray Tracing</title>
+  <link rel="icon" href="./static/images/logo.png">
+  <link rel="stylesheet" href="./static/css/index.css?v=synthetic-gallery">
+  <link rel="stylesheet" href="./static/css/model-viewer.css?v=object-gallery">
+  <script defer src="./static/js/index.js?v=synthetic-gallery"></script>
+  <script defer src="./static/js/model-viewer.js?v=synthetic-gallery"></script>
 </head>
-
-<body>
-  <!-- Title, authors, and links. -->
-  <section class="hero publication-header">
-    <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">
-              <span class="lightfuse-name">LightFuse</span>: Relightable Interactive Gaussian Scene Reconstruction<br class="desktop-break">
-              via Multi-Scan Fusion and 2D Gaussian Ray Tracing
-            </h1>
-
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">Haonan Zhou<sup>1</sup>,</span>
-              <span class="author-block">Gaoxiang Linghu<sup>1</sup>,</span>
-              <span class="author-block">Youlin Jia<sup>2</sup>,</span>
-              <span class="author-block">Hongyu Cui<sup>1</sup></span><br class="author-line-break">
-              <span class="author-block">Kewei Wei<sup>3</sup>,</span>
-              <span class="author-block">Kaiyue Zhou<sup>4</sup>,</span>
-              <span class="author-block"><a href="https://bruceyo.github.io/" target="_blank" rel="noopener">Bruce X.B. Yu</a><sup>1</sup>,</span>
-              <span class="author-block"><a href="https://cvnext.github.io/" target="_blank" rel="noopener">Gaoang Wang</a><sup>1,3,*</sup></span>
-            </div>
-
-            <div class="is-size-6 publication-affiliations">
-              <span class="affiliation-block"><sup>1</sup>ZJU-UIUC Institute, Zhejiang University</span><br>
-              <span class="affiliation-block"><sup>2</sup>College of Mathematics, Sichuan University</span><br>
-              <span class="affiliation-block"><sup>3</sup>College of Computer Science and Technology, Zhejiang University</span><br>
-              <span class="affiliation-block"><sup>4</sup>Chengdu Minto Tech</span>
-            </div>
-
-            <div class="is-size-7 corresponding-author">
-              <sup>*</sup> Corresponding author
-            </div>
-
-
-            <div class="column has-text-centered">
-              <div class="publication-links">
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2608.29269" class="external-link button is-normal is-rounded is-dark" target="_blank" rel="noopener" aria-label="View LightFuse on arXiv">
-                    <span class="icon"><i class="ai ai-arxiv"></i></span>
-                    <span>arXiv</span>
-                  </a>
-                </span>
-                <span class="link-block">
-                  <span class="button is-normal is-rounded is-light unavailable-link" title="Available after publication">
-                    <span class="icon"><i class="fab fa-github"></i></span>
-                    <span>Code Soon</span>
-                  </span>
-                </span>
-              </div>
-            </div>
+<body id="top">
+  <a class="skip-link" href="#insight">Skip to the research insight</a>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <a class="wordmark" href="#top"><img src="./static/images/logo.png" width="28" height="28" alt="">LightFuse</a>
+      <nav aria-label="Project sections"><a href="#insight">Insight</a><a href="#method">Method</a><a href="#explore">Objects</a><a href="#relighting">Relighting</a><a href="#results">Results</a><a href="#BibTeX">Citation</a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <h1 id="title"><span class="project-name">Light<em>Fuse</em><span class="sr-only">:</span></span>
+            <span class="paper-title">Relightable Interactive Gaussian Scene Reconstruction via Multi-Scan Fusion and 2D Gaussian Ray Tracing</span></h1>
+          <p class="authors"><span>Haonan Zhou<sup>1</sup></span>,
+            <span>Gaoxiang Linghu<sup>1</sup></span>,
+            <span>Youlin Jia<sup>2</sup></span>,
+            <span>Chuanyu Cheng<sup>1</sup></span>,
+            <span>Hongyu Cui<sup>1</sup></span>,
+            <span>Kewei Wei<sup>1</sup></span>,
+            <span><a href="https://bruceyo.github.io/">Bruce X.B. Yu</a><sup>1</sup></span>,
+            <span><a href="https://cvnext.github.io/">Gaoang Wang</a><sup>1,*</sup></span></p>
+          <p class="affiliations"><span><sup>1</sup> Zhejiang University</span> <span><sup>2</sup> Sichuan University</span></p>
+          <p class="corresponding">* Corresponding author</p>
+          <div class="actions">
+            <a class="primary" href="#explore">Explore in 3D</a>
+            <a href="#demo"><span aria-hidden="true">▶</span> Watch demo</a>
+            <a href="./static/data/lightfuse-paper.pdf">Paper PDF</a>
+            <a class="text-link" href="https://arxiv.org/abs/2608.29269">arXiv</a>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Main result video. -->
-  <section class="section teaser-section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-11">
-          <p class="teaser-takeaway">
-            LightFuse reconstructs interactive scenes from multi-state, multi-illumination observations, enabling novel-state
-            synthesis, relighting, and object material editing.
-          </p>
-          <div class="publication-video">
-            <video id="lightfuseVideo" controls autoplay loop muted playsinline preload="metadata" poster="./static/data/denoised-display.png">
-              <source src="./static/data/lightfuse-demo.mp4" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
+        <figure class="hero-demo" id="demo">
+          <video id="lightfuseVideo" width="1280" height="720" controls playsinline preload="metadata" poster="./static/data/demo-first-frame.png" aria-label="LightFuse paper demonstration">
+            <source src="./static/data/lightfuse-demo.mp4" type="video/mp4">
+            <a href="./static/data/lightfuse-demo.mp4">Download the demonstration video</a>
+          </video>
+          <figcaption><strong>Video demonstration</strong>Object rearrangement, material editing and relighting</figcaption>
+        </figure>
+        <details class="paper-abstract">
+          <summary>Read the paper abstract</summary>
+          <div id="abstract">
+            <p>Relightable interactive scene reconstruction aims to build an editable 3D model from scans of different object arrangements, so that novel layouts can be rendered under novel illumination. However, Gaussian-splatting-based methods bake illumination into appearance and thus cannot jointly reconstruct scans captured under different lighting, while existing multi-illumination inverse rendering methods struggle to handle scenes whose geometry changes across captures. We present <strong>LightFuse</strong>, a 2D Gaussian inverse rendering framework that bridges this gap by extending interactive scene reconstruction with explicit material-illumination decomposition and physically based relighting.</p>
+            <p>LightFuse fuses observations across states to reconstruct a shared background and movable objects.  Since geometry optimized by splatting alone is ill-suited for ray-tracing-based inverse rendering, it then performs ray-tracing-oriented geometry refinement to obtain more complete and consistent surfaces. Because rearrangement leaves materials unchanged, we jointly optimize a shared set of materials across all scans under varying illumination, with differentiable one-bounce ray tracing disentangling them from the per-scan environment lighting. Experiments on novel-state relighting of synthetic scenes and novel-state synthesis of captured real scenes show that LightFuse outperforms interactive reconstruction and adapted inverse rendering baselines, improving novel-state relighting PSNR by 6.01 dB over the strongest baseline and achieving the highest PSNR on captured scenes.</p>
           </div>
-          <p class="content has-text-justified teaser-caption">
-            LightFuse fuses a shared background and movable objects, refines their surfaces for ray tracing, and separates
-            shared material from state-specific illumination.
-          </p>
+        </details>
+      </div>
+    </section>
+
+    <section class="insight-band" id="insight" aria-labelledby="insight-title">
+      <div class="wrap section insight-grid">
+        <div class="insight-copy">
+          <p class="kicker">Our insight</p>
+          <h2 id="insight-title">What stays the same when a room changes?</h2>
+          <p>Move the chair and a patch of floor comes into view. Keep the chair in place and change the lighting, and its shadow moves across the wall.</p>
+          <p>Across scans, these glimpses of the floor help complete <strong>the room’s geometry</strong>. With that geometry shared across layouts, LightFuse can trace where the chair casts a shadow under each scan’s lighting.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Abstract. -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-11">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              Relightable interactive scene reconstruction aims to build an editable 3D model from scans of different object
-              arrangements and render new layouts under novel illumination. Existing methods either bake lighting into appearance
-              or recover material and illumination only for fixed scenes, leaving edited layouts with inconsistent shadows and
-              indirect lighting. We present <span class="lightfuse-name">LightFuse</span>, a 2D Gaussian framework that extends
-              interactive scene reconstruction with explicit material-illumination decomposition and physically based relighting.
-              LightFuse first fuses observations across states to reconstruct a shared background and movable objects. It then
-              conducts ray-tracing-oriented geometry refinement to produce more complete and consistent surfaces. On the refined
-              geometry, staged training with differentiable one-bounce ray tracing separates shared metallic-roughness material
-              from state-specific environment lighting. The resulting scene supports object rearrangement, material editing, and
-              relighting, while ray tracing recomputes appearance after each interaction. Experiments across synthetic scenes
-              demonstrate state-of-the-art relighting quality, outperforming the strongest baseline by +9.74 dB PSNR and +0.121
-              SSIM on average.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Methodology. -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-11">
-          <h2 class="title is-3">Methodology</h2>
-          <div class="publication-image paper-figure">
-            <img src="./static/images/lightfuse/pipeline.png" alt="Pipeline of LightFuse">
-          </div>
-          <div class="content has-text-justified">
-            <p>
-              Given multi-state RGB images, masks, normals, and depth, LightFuse first reconstructs an occlusion-complete shared
-              background and movable object components with 2D Gaussian surfels. Cross-state supervision then refines geometry
-              for ray tracing through coverage, scale, depth, and normal regularization. Finally, staged inverse rendering shares
-              material across states while optimizing a separate environment map for each state. Differentiable one-bounce path
-              tracing enables novel-state relighting and material editing with updated light transport.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Results. -->
-  <section class="section results-heading-section" aria-labelledby="results-title">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered" id="results-title">Results</h2>
-    </div>
-  </section>
-
-  <!-- Quantitative results. -->
-  <section class="section result-subsection">
-    <div class="container is-max-widescreen">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-12">
-          <h3 class="title is-4">Novel-State Relighting</h3>
-          <div class="novel-relighting-visual">
-            <div class="publication-image paper-figure">
-              <img src="./static/images/lightfuse/synthetic-results.png" alt="Qualitative comparison of novel-state relighting on synthetic scenes">
-            </div>
-            <p class="content has-text-justified figure-caption">
-              Qualitative comparison under unseen environment maps. LightFuse produces more consistent shadows, reflections,
-              and low-texture surfaces after the scene layout changes.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Real-world results. -->
-  <section class="section result-subsection">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-11">
-          <h3 class="title is-4">Real-World Results</h3>
-          <div class="publication-image paper-figure">
-            <img src="./static/images/lightfuse/real-results.png" alt="Qualitative comparison of novel-state synthesis on real scenes">
-          </div>
-          <p class="content has-text-justified figure-caption">
-            Novel-state synthesis on captured scenes with changes in object layout and illumination. Red boxes highlight cast
-            shadows and reflections after object rearrangement.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Scene property videos. -->
-  <section class="section result-subsection property-video-section" aria-labelledby="property-videos-title">
-    <div class="container is-max-widescreen">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-12">
-          <h3 class="title is-4" id="property-videos-title">Scene Property Reconstruction</h3>
-          <p class="content has-text-justified section-intro">
-            Animated predictions show the recovered intrinsic appearance and geometry throughout the camera trajectory.
-            Together, base color, depth, surface normals, roughness, and metallic values provide the scene properties used for
-            physically based relighting.
-          </p>
-
-          <div class="property-video-group">
-
-            <div class="property-video-grid">
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Animated reconstructed base color">
-                  <source src="./static/videos/base_color.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Base Color</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Animated reconstructed depth">
-                  <source src="./static/videos/depth_turbo.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Depth</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Animated reconstructed surface normals">
-                  <source src="./static/videos/normal.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Surface Normals</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Animated reconstructed roughness">
-                  <source src="./static/videos/roughness.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Roughness</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Animated reconstructed metallic values">
-                  <source src="./static/videos/metallic.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Metallic</strong></figcaption>
-              </figure>
+        <div class="insight-comparison">
+          <div class="comparison-toolbar">
+            <h3>Bedroom</h3>
+            <div class="compare-modes" role="group" aria-label="Choose an edit to compare" hidden>
+              <button type="button" aria-pressed="true" data-edit="lighting">Lighting</button>
+              <button type="button" aria-pressed="false" data-edit="pose">Object pose</button>
             </div>
           </div>
-
-          <div class="property-video-group">
-            <div class="property-video-grid">
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Playroom base color along an interpolated camera trajectory">
-                  <source src="./static/videos/playroom_base_color_segment01_interp2x_24fps.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Base Color</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Playroom depth along an interpolated camera trajectory">
-                  <source src="./static/videos/playroom_depth_turbo_segment01_interp2x_24fps.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Depth</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Playroom surface normals along an interpolated camera trajectory">
-                  <source src="./static/videos/playroom_normal_segment01_interp2x_24fps.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Surface Normals</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Playroom roughness along an interpolated camera trajectory">
-                  <source src="./static/videos/playroom_roughness_segment01_interp2x_24fps.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Roughness</strong></figcaption>
-              </figure>
-
-              <figure class="property-video-card">
-                <video class="result-video" controls loop muted playsinline preload="metadata" aria-label="Playroom metallic values along an interpolated camera trajectory">
-                  <source src="./static/videos/playroom_metallic_segment01_interp2x_24fps.mp4" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-                <figcaption><strong>Metallic</strong></figcaption>
-              </figure>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Additional visual analysis from the supplementary material. -->
-  <section class="section result-subsection supplementary-analysis-section">
-    <div class="container is-max-widescreen">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-11">
-          <h3 class="title is-4">Additional Visual Analysis</h3>
-          <p class="content has-text-justified section-intro">
-            Additional held-out-view analyses show that LightFuse recovers cleaner base color and roughness while producing more
-            complete depth and surface normals across Bedroom, Kitchen, Livingroom, and Playroom.
-          </p>
-
-          <div class="visual-analysis-grid">
-            <figure class="analysis-card">
-              <a href="./static/images/lightfuse/analysis/base-color-comparison.jpg" target="_blank" rel="noopener">
-                <img src="./static/images/lightfuse/analysis/base-color-comparison.jpg" loading="lazy" alt="Base-color comparison between the reference, ReCap, ReCap Adapted, and LightFuse">
-              </a>
-              <figcaption><strong>Base Color.</strong> LightFuse reduces illumination-dependent artifacts in the recovered material.</figcaption>
+          <div class="compare-stage">
+            <figure class="compare-left">
+              <img width="1280" height="720" src="./static/images/insight/bedroom-moved.webp" alt="Gray chair beside the desk under Bridge lighting">
+              <figcaption>Bridge</figcaption>
             </figure>
-
-            <figure class="analysis-card">
-              <a href="./static/images/lightfuse/analysis/roughness-comparison.jpg" target="_blank" rel="noopener">
-                <img src="./static/images/lightfuse/analysis/roughness-comparison.jpg" loading="lazy" alt="Roughness comparison between the reference, ReCap, ReCap Adapted, and LightFuse">
-              </a>
-              <figcaption><strong>Roughness.</strong> Shared multi-state material produces more stable roughness estimates.</figcaption>
+            <figure class="compare-right">
+              <img width="1280" height="720" src="./static/images/insight/bedroom-sunrise.webp" alt="Same gray chair and layout under Sunrise lighting">
+              <figcaption>Sunrise</figcaption>
             </figure>
-
-            <figure class="analysis-card">
-              <a href="./static/images/lightfuse/analysis/geometry-comparison.jpg" target="_blank" rel="noopener">
-                <img src="./static/images/lightfuse/analysis/geometry-comparison.jpg" loading="lazy" alt="Depth and normal comparison between the reference, ReCap, ReCap Adapted, and LightFuse">
-              </a>
-              <figcaption><strong>Geometry.</strong> Explicit depth and normal supervision yields cleaner boundaries and surface orientations.</figcaption>
-            </figure>
+            <span aria-hidden="true" class="compare-line" hidden></span>
+            <input type="range" min="0" max="100" value="50" aria-label="Reveal the left render" data-left-label="Bridge" hidden>
           </div>
+          <p class="comparison-note" aria-live="polite">Drag to compare the same chair under two environment maps. Watch the shadow cross the floor and wall.</p>
+        </div>
+      </div>
+    </section>
 
-          <h4 class="title is-5 analysis-subtitle">Additional Relighting Comparisons</h4>
-          <figure class="analysis-card wide-analysis-card">
-            <a href="./static/images/lightfuse/analysis/detailed-relighting-comparison.jpg" target="_blank" rel="noopener">
-              <img src="./static/images/lightfuse/analysis/detailed-relighting-comparison.jpg" loading="lazy" alt="Detailed novel-state relighting comparisons across four scenes and multiple environment maps">
-            </a>
+    <section class="wrap section" id="method" aria-labelledby="method-title">
+      <div class="intro"><h2 id="method-title">Method overview</h2>
+        <p>To combine those observations, LightFuse aligns each movable object across scans and reconstructs the background in a common frame. It refines the resulting 2D Gaussian surfaces for ray tracing, then estimates their materials under each scan’s lighting.</p></div>
+      <figure class="paper-figure">
+          <a href="./static/images/lightfuse/pipeline.webp" aria-label="Open full-size figure: LightFuse pipeline from multi-state inputs to geometry refinement and inverse rendering"><img src="./static/images/lightfuse/pipeline.webp" loading="lazy" alt="LightFuse pipeline from multi-state inputs to geometry refinement and inverse rendering"></a>
+          <figcaption>The pipeline combines complementary views of each object and the background in a shared 2D Gaussian representation.</figcaption>
+        </figure>
+      <div class="stages">
+        <div><h3>Complete the scene</h3><p>Separate movable objects from the reference scan. Use depth and normals from the other scans to fill surfaces exposed when objects move.</p></div>
+        <div><h3>Refine ray intersections</h3><p>Regularize surfel opacity and size, then refine the geometry with a ray tracer. This closes holes that leak light while reducing false occlusions.</p></div>
+        <div><h3>Separate material and light</h3><p>Fix the geometry and jointly fit shared base color, roughness, metallic values and one environment map per scan with differentiable one-bounce path tracing.</p></div>
+      </div>
+      <details><summary>See the reconstructed components</summary>
+        <figure class="paper-figure">
+          <a href="./static/images/lightfuse/teaser.webp" aria-label="Open full-size figure: Shared geometry and material from multiple scans and four edited renderings"><img src="./static/images/lightfuse/teaser.webp" loading="lazy" alt="Shared geometry and material from multiple scans and four edited renderings"></a>
+          <figcaption>Normals, ambient occlusion and base color reveal the reconstructed background and movable objects.</figcaption>
+        </figure>
+      </details>
+    </section>
+
+    <section class="explorer-band" id="explore" aria-labelledby="explore-title">
+      <div class="wrap section explorer-layout">
+        <div class="explorer-copy">
+          <h2 id="explore-title">Explore the objects</h2>
+          <p>Choose an object from one of four synthetic rooms. Rotate it to inspect its shape, view its Gaussian footprints or change the lighting to see how its material responds.</p>
+        </div>
+        <div class="object-display">
+          <figure class="object-panel" id="object-toy-car">
+            <div class="model-viewer" data-name="Toy car" data-src="./static/models/toy-car.lfg" data-yaw="30" data-pitch="18" data-zoom="1.28">
+              <img class="model-poster" src="./static/models/toy-car.webp?v=gallery" loading="lazy" width="960" height="600" alt="A red toy car with a curved roof and dark tires">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Toy car</strong> · Playroom · 45,813 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-retro-computer" hidden>
+            <div class="model-viewer" data-name="Retro computer" data-src="./static/models/retro-computer.lfg" data-yaw="55" data-pitch="16" data-zoom="1.12">
+              <img class="model-poster" src="./static/models/retro-computer.webp?v=gallery" loading="lazy" width="960" height="600" alt="A desktop computer with a CRT monitor">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Retro computer</strong> · Bedroom · 33,621 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-plush-dog" hidden>
+            <div class="model-viewer" data-name="Shiba plush" data-src="./static/models/plush-dog.lfg" data-yaw="128" data-pitch="16" data-zoom="1.22">
+              <img class="model-poster" src="./static/models/plush-dog.webp?v=gallery" loading="lazy" width="960" height="600" alt="A Shiba Inu plush toy">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Shiba plush</strong> · Playroom · 12,637 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-armchair" hidden>
+            <div class="model-viewer" data-name="Armchair" data-src="./static/models/armchair.lfg" data-yaw="-30" data-pitch="19" data-zoom="1.12">
+              <img class="model-poster" src="./static/models/armchair.webp?v=gallery" loading="lazy" width="960" height="600" alt="A blue upholstered armchair with a rounded back">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Armchair</strong> · Livingroom · 24,728 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-enamel-pot" hidden>
+            <div class="model-viewer" data-name="Enamel pot" data-src="./static/models/enamel-pot.lfg" data-yaw="-32" data-pitch="25" data-zoom="1.23" data-target="0.36133,0.82196,0.89666" data-radius="0.22006">
+              <img class="model-poster" src="./static/models/enamel-pot.webp?v=gallery" loading="lazy" width="960" height="600" alt="A red enamel cooking pot">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Enamel pot</strong> · Kitchen · 8,839 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-rocket" hidden>
+            <div class="model-viewer" data-name="Rocket" data-src="./static/models/rocket.lfg" data-yaw="10" data-pitch="12" data-zoom="1.03">
+              <img class="model-poster" src="./static/models/rocket.webp?v=gallery" loading="lazy" width="960" height="600" alt="A toy rocket with a nose cone and fins">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Rocket</strong> · Playroom · 14,127 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-balloon-dog" hidden>
+            <div class="model-viewer" data-name="Balloon dog" data-src="./static/models/balloon-dog.lfg" data-yaw="-65" data-pitch="12" data-zoom="1.2">
+              <img class="model-poster" src="./static/models/balloon-dog.webp?v=gallery" loading="lazy" width="960" height="600" alt="A dog made of twisted balloon shapes">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Balloon dog</strong> · Playroom · 10,257 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-venus" hidden>
+            <div class="model-viewer" data-name="Venus de Milo" data-src="./static/models/venus.lfg" data-yaw="82" data-pitch="10" data-zoom="0.98" data-target="0.24976,0.68464,-2.12849" data-radius="0.28108">
+              <img class="model-poster" src="./static/models/venus.webp?v=gallery" loading="lazy" width="960" height="600" alt="A reconstruction of a Venus de Milo statuette">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Venus de Milo</strong> · Livingroom · 12,416 learned Gaussians</figcaption>
+          </figure>
+          <figure class="object-panel" id="object-rubber-duck" hidden>
+            <div class="model-viewer" data-name="Rubber duck" data-src="./static/models/rubber-duck.lfg" data-yaw="-32" data-pitch="15" data-zoom="1.15">
+              <img class="model-poster" src="./static/models/rubber-duck.webp?v=gallery" loading="lazy" width="960" height="600" alt="A rubber duck seen in three-quarter view">
+              <button type="button" class="model-launch" hidden>View in 3D</button>
+            </div>
+            <figcaption><strong>Rubber duck</strong> · Playroom · 5,252 learned Gaussians</figcaption>
+          </figure>
+          <noscript>Enable JavaScript to choose, rotate and relight the objects.</noscript>
+        </div>
+        <div class="object-picker object-grid" role="group" aria-label="Choose an object to explore" hidden>
+          <button type="button" class="object-option" aria-pressed="true" aria-controls="object-toy-car">
+            <img src="./static/models/toy-car.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Toy car</strong><small>Playroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-retro-computer">
+            <img src="./static/models/retro-computer.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Retro computer</strong><small>Bedroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-plush-dog">
+            <img src="./static/models/plush-dog.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Shiba plush</strong><small>Playroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-armchair">
+            <img src="./static/models/armchair.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Armchair</strong><small>Livingroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-enamel-pot">
+            <img src="./static/models/enamel-pot.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Enamel pot</strong><small>Kitchen</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-rocket">
+            <img src="./static/models/rocket.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Rocket</strong><small>Playroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-balloon-dog">
+            <img src="./static/models/balloon-dog.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Balloon dog</strong><small>Playroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-venus">
+            <img src="./static/models/venus.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Venus de Milo</strong><small>Livingroom</small></span>
+          </button>
+          <button type="button" class="object-option" aria-pressed="false" aria-controls="object-rubber-duck">
+            <img src="./static/models/rubber-duck.webp?v=gallery" width="120" height="75" loading="lazy" alt="">
+            <span><strong>Rubber duck</strong><small>Playroom</small></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section class="relight-band" id="relighting" aria-labelledby="relight-title">
+      <div class="wrap section">
+        <div class="intro">
+          <h2 id="relight-title">Full-scene relighting</h2>
+          <p>Follow the shadow beneath the bedroom chair or the light reflected in the living room floor. Switch between four HDR environments rendered with the LightFuse one-bounce ray tracer. Each room keeps the same camera, layout and materials.</p>
+        </div>
+        <div class="relight-layout">
+          <figure class="relight-output">
+            <img id="relight-frame" src="./static/images/relighting/bedroom-25-bridge.webp" width="1280" height="720" loading="lazy" alt="LightFuse rendering of the Bedroom under the Bridge environment">
+            <figcaption id="relight-frame-caption" aria-live="polite">Bedroom · Bridge · Camera 25</figcaption>
+          </figure>
+          <form class="relight-settings" aria-label="Full-scene path-traced render" hidden>
+            <fieldset class="relight-rooms">
+              <legend>Test scene</legend>
+              <label><input type="radio" name="room" value="bedroom" data-label="Bedroom" data-camera="25" checked><span>Bedroom</span></label>
+              <label><input type="radio" name="room" value="kitchen" data-label="Kitchen" data-camera="192"><span>Kitchen</span></label>
+              <label><input type="radio" name="room" value="livingroom" data-label="Livingroom" data-camera="68"><span>Livingroom</span></label>
+            </fieldset>
+            <fieldset class="relight-environments">
+              <legend>HDR environment</legend>
+              <label><input type="radio" name="environment" value="bridge" data-label="Bridge" checked><span><img src="./static/lighting/bridge.webp" width="96" height="48" loading="lazy" alt="">Bridge</span></label>
+              <label><input type="radio" name="environment" value="courtyard" data-label="Courtyard"><span><img src="./static/lighting/courtyard.webp" width="96" height="48" loading="lazy" alt="">Courtyard</span></label>
+              <label><input type="radio" name="environment" value="museum" data-label="Museum"><span><img src="./static/lighting/museum.webp" width="96" height="48" loading="lazy" alt="">Museum</span></label>
+              <label><input type="radio" name="environment" value="night" data-label="Night"><span><img src="./static/lighting/night.webp" width="96" height="48" loading="lazy" alt="">Night</span></label>
+            </fieldset>
+            <p class="relight-status" role="status"></p>
+          </form>
+        </div>
+        <p class="relight-source">Held-out layout · 32 samples per pixel · OptiX denoising</p>
+      </div>
+    </section>
+
+    <section class="band" id="results">
+      <div class="wrap section">
+        <h2>Results</h2>
+        <article class="experiment">
+          <div class="experiment-text"><h3>Novel-state relighting</h3>
+            <p>How closely do the relit rooms match the reference images? Across four synthetic rooms, we train on three layouts per room and test a held-out layout under eleven unseen environment maps. LightFuse gains <strong>6.01 dB PSNR</strong> and <strong>0.131 SSIM</strong> over IRGS.</p></div>
+          <table>
+            <caption>Synthetic scenes · equal-weight scene average</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">PSNR (dB) ↑</th><th scope="col">SSIM ↑</th></tr></thead>
+            <tbody><tr><th scope="row">IGFuse</th><td>14.88</td><td>0.714</td></tr><tr><th scope="row">ReCap</th><td>15.39</td><td>0.713</td></tr><tr><th scope="row">IRGS</th><td>19.88</td><td>0.742</td></tr><tr><th scope="row">LightFuse</th><td><strong>25.89</strong></td><td><strong>0.873</strong></td></tr></tbody>
+          </table>
+        </article>
+        <figure class="paper-figure">
+          <a href="./static/images/lightfuse/synthetic_relighting.webp" aria-label="Open full-size figure: Target environment, ground truth and four methods on Bedroom, Playroom, Livingroom and Kitchen"><img src="./static/images/lightfuse/synthetic_relighting.webp" loading="lazy" alt="Target environment, ground truth and four methods on Bedroom, Playroom, Livingroom and Kitchen"></a>
+          <figcaption>Cast shadows, reflections and the shading of low-texture surfaces change with the target illumination. ReCap and IRGS are adapted to the multi-state setting.</figcaption>
+        </figure>
+        <details>
+          <summary>Explore four Livingroom edits</summary>
+          <figure class="scene-viewer">
+            <img id="scene-image" width="1024" height="674" src="./static/images/lightfuse/livingroom-ray-tracing.jpg" alt="A close view shows the chair reflected in the polished floor." loading="lazy">
             <figcaption>
-              Close-up comparisons across all four synthetic scenes. LightFuse better preserves target illumination, shadows,
-              reflections, and low-texture surfaces after object rearrangement.
+              <p class="render-label">Livingroom <span>/</span> Novel-state rendering</p>
+              <div class="scene-controls" role="group" aria-label="Livingroom render to display" hidden>
+                <button type="button" aria-pressed="false" aria-controls="scene-image" data-src="./static/images/lightfuse/livingroom-relighting.jpg" data-caption="A new environment casts a long shadow across the living room.">Relighting</button>
+                <button type="button" aria-pressed="false" aria-controls="scene-image" data-src="./static/images/lightfuse/livingroom-rearrangement.jpg" data-caption="The chairs move into a new layout around the sofa.">Rearrangement</button>
+                <button type="button" aria-pressed="false" aria-controls="scene-image" data-src="./static/images/lightfuse/livingroom-material.jpg" data-caption="A material edit changes the upholstered chairs from blue to orange.">Material editing</button>
+                <button type="button" aria-pressed="true" aria-controls="scene-image" data-src="./static/images/lightfuse/livingroom-ray-tracing.jpg" data-caption="A close view shows the chair reflected in the polished floor.">Ray-traced effects</button>
+              </div>
+              <p id="scene-caption" aria-live="polite">A close view shows the chair reflected in the polished floor.</p>
             </figcaption>
           </figure>
-
-          <details class="supplementary-details">
-            <summary>View all 11 unseen lighting conditions for each scene</summary>
-            <div class="supplementary-gallery">
-              <figure>
-                <a href="./static/images/lightfuse/analysis/bedroom-relighting.jpg" target="_blank" rel="noopener">
-                  <img src="./static/images/lightfuse/analysis/bedroom-relighting.jpg" loading="lazy" alt="Bedroom novel-state relighting under eleven unseen environment maps">
-                </a>
-                <figcaption>Bedroom</figcaption>
-              </figure>
-              <figure>
-                <a href="./static/images/lightfuse/analysis/kitchen-relighting.jpg" target="_blank" rel="noopener">
-                  <img src="./static/images/lightfuse/analysis/kitchen-relighting.jpg" loading="lazy" alt="Kitchen novel-state relighting under eleven unseen environment maps">
-                </a>
-                <figcaption>Kitchen</figcaption>
-              </figure>
-              <figure>
-                <a href="./static/images/lightfuse/analysis/livingroom-relighting.jpg" target="_blank" rel="noopener">
-                  <img src="./static/images/lightfuse/analysis/livingroom-relighting.jpg" loading="lazy" alt="Livingroom novel-state relighting under eleven unseen environment maps">
-                </a>
-                <figcaption>Livingroom</figcaption>
-              </figure>
-              <figure>
-                <a href="./static/images/lightfuse/analysis/playroom-relighting.jpg" target="_blank" rel="noopener">
-                  <img src="./static/images/lightfuse/analysis/playroom-relighting.jpg" loading="lazy" alt="Playroom novel-state relighting under eleven unseen environment maps">
-                </a>
-                <figcaption>Playroom</figcaption>
-              </figure>
-            </div>
-          </details>
-        </div>
+        </details>
+        <article class="experiment">
+          <div class="experiment-text"><h3>Novel-state synthesis</h3>
+            <p>In two captured scenes, we render a new object layout under lighting observed during training. LightFuse leads in PSNR at <strong>24.35 dB</strong>. ReCap leads in SSIM at <strong>0.903</strong>.</p></div>
+          <table>
+            <caption>Captured scenes · equal-weight scene average</caption>
+            <thead><tr><th scope="col">Method</th><th scope="col">PSNR (dB) ↑</th><th scope="col">SSIM ↑</th></tr></thead>
+            <tbody><tr><th scope="row">IGFuse</th><td>17.19</td><td>0.841</td></tr><tr><th scope="row">ReCap</th><td>22.80</td><td><strong>0.903</strong></td></tr><tr><th scope="row">IRGS</th><td>18.75</td><td>0.769</td></tr><tr><th scope="row">LightFuse</th><td><strong>24.35</strong></td><td>0.821</td></tr></tbody>
+          </table>
+        </article>
+        <figure class="paper-figure">
+          <a href="./static/images/lightfuse/synthetic_real.webp" aria-label="Open full-size figure: Training states, ground truth, IGFuse, ReCap, IRGS and LightFuse for two captured scenes"><img src="./static/images/lightfuse/synthetic_real.webp" loading="lazy" alt="Training states, ground truth, IGFuse, ReCap, IRGS and LightFuse for two captured scenes"></a>
+          <figcaption>The red boxes mark reflections and cast shadows near the moved objects. Each inverse renderer uses the environment map recovered from the corresponding training state.</figcaption>
+        </figure>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- BibTeX. -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <div class="columns is-centered">
-        <div class="column is-11">
-          <h2 class="title is-3">BibTeX</h2>
-          <pre><code>@article{zhou2026lightfuse,
-  author = {Zhou, Haonan and Linghu, Gaoxiang and Jia, Youlin and Cui, Hongyu and
-            Wei, Kewei and Zhou, Kaiyue and Yu, Bruce X. B. and Wang, Gaoang},
-  title  = {LightFuse: Relightable Interactive Gaussian Scene Reconstruction
-            via Multi-Scan Fusion and 2D Gaussian Ray Tracing},
-  year   = {2026},
+    <section class="wrap section" id="analysis">
+      <div class="intro"><h2>Geometry and materials</h2>
+        <p>Inspect the reconstructed surfaces along a camera path, or open a figure to compare predictions at full resolution.</p></div>
+      <h4>Livingroom</h4>
+          <div class="property-grid">
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Livingroom base color">
+              <source src="./static/videos/base_color.mp4" type="video/mp4">
+            </video><figcaption>Base color</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Livingroom depth">
+              <source src="./static/videos/depth_turbo.mp4" type="video/mp4">
+            </video><figcaption>Depth</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Livingroom normals">
+              <source src="./static/videos/normal.mp4" type="video/mp4">
+            </video><figcaption>Normals</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Livingroom roughness">
+              <source src="./static/videos/roughness.mp4" type="video/mp4">
+            </video><figcaption>Roughness</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Livingroom metallic">
+              <source src="./static/videos/metallic.mp4" type="video/mp4">
+            </video><figcaption>Metallic</figcaption></figure>
+          </div>
+      <h4>Playroom</h4>
+          <div class="property-grid">
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Playroom base color">
+              <source src="./static/videos/playroom_base_color_segment01_interp2x_24fps.mp4" type="video/mp4">
+            </video><figcaption>Base color</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Playroom depth">
+              <source src="./static/videos/playroom_depth_turbo_segment01_interp2x_24fps.mp4" type="video/mp4">
+            </video><figcaption>Depth</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Playroom normals">
+              <source src="./static/videos/playroom_normal_segment01_interp2x_24fps.mp4" type="video/mp4">
+            </video><figcaption>Normals</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Playroom roughness">
+              <source src="./static/videos/playroom_roughness_segment01_interp2x_24fps.mp4" type="video/mp4">
+            </video><figcaption>Roughness</figcaption></figure>
+            <figure><video controls muted loop playsinline preload="metadata" aria-label="Playroom metallic">
+              <source src="./static/videos/playroom_metallic_segment01_interp2x_24fps.mp4" type="video/mp4">
+            </video><figcaption>Metallic</figcaption></figure>
+          </div>
+      <details><summary>Compare base color, roughness and geometry</summary>
+        <p>Held-out views show the Blender reference alongside ReCap, IRGS and LightFuse. Occluded regions reveal where shading remains in the estimated base color.</p><div class="material-grid"><figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/base-color-comparison.jpg" aria-label="Open full-size figure: Base color for Blender reference, ReCap, IRGS and LightFuse"><img src="./static/images/lightfuse/analysis/base-color-comparison.jpg" loading="lazy" alt="Base color for Blender reference, ReCap, IRGS and LightFuse"></a>
+          <figcaption>Base color</figcaption>
+        </figure>
+          <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/roughness-comparison.jpg" aria-label="Open full-size figure: Roughness for Blender reference, ReCap, IRGS and LightFuse"><img src="./static/images/lightfuse/analysis/roughness-comparison.jpg" loading="lazy" alt="Roughness for Blender reference, ReCap, IRGS and LightFuse"></a>
+          <figcaption>Roughness</figcaption>
+        </figure>
+          <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/geometry-comparison.jpg" aria-label="Open full-size figure: Depth and normals for Blender reference, ReCap, IRGS and LightFuse"><img src="./static/images/lightfuse/analysis/geometry-comparison.jpg" loading="lazy" alt="Depth and normals for Blender reference, ReCap, IRGS and LightFuse"></a>
+          <figcaption>Depth and normals</figcaption>
+        </figure></div>
+      </details>
+      <details><summary>How geometry affects relighting</summary>
+        <figure class="paper-figure">
+          <a href="./static/images/lightfuse/geometry_relighting_ablation.webp" aria-label="Open full-size figure: Relighting ablation showing completion and ray-traced refinement"><img src="./static/images/lightfuse/geometry_relighting_ablation.webp" loading="lazy" alt="Relighting ablation showing completion and ray-traced refinement"></a>
+          <figcaption>Cross-state completion recovers background hidden behind objects. Ray-traced refinement reduces light leaks and false shadows.</figcaption>
+        </figure>
+      </details>
+      <details><summary>Relighting comparisons across four rooms</summary>
+        <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/detailed-relighting-comparison.jpg" aria-label="Open full-size figure: Detailed relighting across four scenes and unseen environment maps"><img src="./static/images/lightfuse/analysis/detailed-relighting-comparison.jpg" loading="lazy" alt="Detailed relighting across four scenes and unseen environment maps"></a>
+          <figcaption>Each pair of rows shows a different room. Compare the reference rendering with IGFuse, ReCap, IRGS and LightFuse.</figcaption>
+        </figure><div class="gallery"><figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/bedroom-relighting.jpg" aria-label="Open full-size figure: Bedroom under eleven unseen environment maps"><img src="./static/images/lightfuse/analysis/bedroom-relighting.jpg" loading="lazy" alt="Bedroom under eleven unseen environment maps"></a>
+          <figcaption>Bedroom</figcaption>
+        </figure>
+          <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/kitchen-relighting.jpg" aria-label="Open full-size figure: Kitchen under eleven unseen environment maps"><img src="./static/images/lightfuse/analysis/kitchen-relighting.jpg" loading="lazy" alt="Kitchen under eleven unseen environment maps"></a>
+          <figcaption>Kitchen</figcaption>
+        </figure>
+          <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/livingroom-relighting.jpg" aria-label="Open full-size figure: Livingroom under eleven unseen environment maps"><img src="./static/images/lightfuse/analysis/livingroom-relighting.jpg" loading="lazy" alt="Livingroom under eleven unseen environment maps"></a>
+          <figcaption>Livingroom</figcaption>
+        </figure>
+          <figure class="paper-figure">
+          <a href="./static/images/lightfuse/analysis/playroom-relighting.jpg" aria-label="Open full-size figure: Playroom under eleven unseen environment maps"><img src="./static/images/lightfuse/analysis/playroom-relighting.jpg" loading="lazy" alt="Playroom under eleven unseen environment maps"></a>
+          <figcaption>Playroom</figcaption>
+        </figure></div>
+      </details>
+    </section>
+
+    <section class="band" id="BibTeX">
+      <div class="wrap section reading">
+        <h2>BibTeX</h2>
+        <pre><code>@misc{zhou2026lightfuse,
+  title = {LightFuse: Relightable Interactive Gaussian Scene Reconstruction
+           via Multi-Scan Fusion and 2D Gaussian Ray Tracing},
+  author = {Zhou, Haonan and Linghu, Gaoxiang and Jia, Youlin and Cheng, Chuanyu
+            and Cui, Hongyu and Wei, Kewei and Yu, Bruce X.B. and Wang, Gaoang},
+  year = {2026},
   eprint = {2608.29269},
   archivePrefix = {arXiv},
-  primaryClass  = {cs.CV}
+  primaryClass = {cs.CV}
 }</code></pre>
-        </div>
       </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8">
-          <div class="content">
-            <p>We thank the authors of <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a> and the
-              <a href="https://github.com/IG-Fuse/IG-Fuse.github.io">IGFuse project page</a> for the website template.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
+    </section>
+  </main>
+  <footer class="wrap"><p>Website credits · <a href="https://nerfies.github.io/">Nerfies</a>, <a href="https://github.com/IG-Fuse/IG-Fuse.github.io">IGFuse</a> and <a href="https://roamgs.github.io/">ROAM-GS</a></p><a href="#top">Back to top</a></footer>
 </body>
-
 </html>

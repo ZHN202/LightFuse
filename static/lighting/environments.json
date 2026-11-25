@@ -1,0 +1,37 @@
+{
+  "width": 64,
+  "height": 32,
+  "roughness": [
+    0,
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "environments": [
+    {
+      "id": "bridge",
+      "label": "Bridge",
+      "file": "bridge.bin",
+      "thumbnail": "bridge.webp"
+    },
+    {
+      "id": "sunrise",
+      "label": "Sunrise",
+      "file": "sunrise.bin",
+      "thumbnail": "sunrise.webp"
+    },
+    {
+      "id": "fireplace",
+      "label": "Fireplace",
+      "file": "fireplace.bin",
+      "thumbnail": "fireplace.webp"
+    },
+    {
+      "id": "studio",
+      "label": "Studio",
+      "file": "studio.bin",
+      "thumbnail": "studio.webp"
+    }
+  ]
+}
